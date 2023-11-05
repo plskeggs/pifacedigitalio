@@ -130,18 +130,11 @@ class InputEventListener(pifacecommon.interrupts.PortEventListener):
     >>> listener.register(0, pifacedigitalio.IODIR_ON, print_flag)
     >>> listener.activate()
     """
-    def __init__(self, chip=None, daemon=False):
+    def __init__(self, chip=None):
         if chip is None:
             chip = PiFaceDigital()
-        # requires version bump to v4.0.0 becasue method signature has changed
-        # super(InputEventListener, self).__init__(pifacecommon.mcp23s17.GPIOB,
-        #                                          chip,
-        #                                          daemon=daemon)
-        # work around for now -- doesn't depend on new version of pifacecommon
-        super(InputEventListener, self).__init__(pifacecommon.mcp23s17.GPIOB,
-                                                 chip)
-        self.detector.daemon = daemon
-        self.dispatcher.daemon = daemon
+        super(InputEventListener, self).__init__(
+            pifacecommon.mcp23s17.GPIOB, chip)
 
 
 def init(init_board=True,
